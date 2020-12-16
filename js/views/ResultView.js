@@ -9,14 +9,12 @@ export default class ResultView extends View {
   }
 
   render(resultData = []) {
-    console.log(`${tag} render`);
     this.$element.innerHTML = resultData.length
       ? this.getSearchResultHTML(resultData)
       : RESULT_VIEW_MESSAGES.NO_RESULT;
   }
 
   getSearchResultHTML(resultData) {
-    console.log(`${tag} getSearchResultHTML`);
     return `${resultData.reduce(
       (html, item) => (html += this.getSearchItemHTML(item)),
       '<ul>'
@@ -24,7 +22,6 @@ export default class ResultView extends View {
   }
 
   getSearchItemHTML(resultItem) {
-    console.log(`${tag} getSearchItemHTML`);
     return `<li>
         <img src=${resultItem.image} alt=${resultItem.name} />
         <span>${resultItem.name}</span>

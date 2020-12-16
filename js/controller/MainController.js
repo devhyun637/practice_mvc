@@ -14,7 +14,6 @@ export default class MainController {
   }
 
   searchWords(resultWords) {
-    console.log(`${tag} searchWords`);
     // 검색 결과 가져오기
     SearchModel.list(resultWords).then((data) => {
       this.renderSearchResult(data);
@@ -22,18 +21,15 @@ export default class MainController {
   }
 
   renderSearchResult(data) {
-    console.log(`${tag} renderSearchResult`);
     this.resultForm.show();
     this.resultForm.render(data);
   }
 
   onSubmitSearchInput(resultWords) {
-    console.log(`${tag} onSubmitSearchInput`);
     this.searchWords(resultWords);
   }
 
   onResetSearchResult() {
-    console.log(`${tag} onResetSearchResult`);
     this.resultForm.hide();
   }
 }
