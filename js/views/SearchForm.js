@@ -1,5 +1,5 @@
 import View from './View.js';
-import KEYBOARD from '../utils/constants.js';
+import { KEYBOARD } from '../utils/constants.js';
 
 const tag = `[SearchForm]`;
 export default class SearchForm extends View {
