@@ -1,11 +1,11 @@
-import SearchForm from '../views/SearchForm.js';
+import SearchView from '../views/SearchView.js';
 import ResultView from '../views/ResultView.js';
 import SearchModel from '../models/SearchModel.js';
 
 const tag = `[MainController]`;
 export default class MainController {
   init() {
-    new SearchForm()
+    new SearchView()
       .setup(document.querySelector('#search-input-container'))
       .on('submitInput', (e) => this.onSubmitSearchInput(e.detail));
 
