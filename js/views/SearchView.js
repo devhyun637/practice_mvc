@@ -17,7 +17,7 @@ export default class SearchView extends View {
   }
 
   bindEvent() {
-    this.$searchInput.addEventListener('keyup', (e) => this.onSubmitSearchWordHandler(e));
+    this.$searchInput.addEventListener('keydown', (e) => this.onSubmitSearchWordHandler(e));
     this.$searchResetBtn.addEventListener('click', () => this.onResetSearchWordHandler());
   }
 
@@ -35,5 +35,6 @@ export default class SearchView extends View {
   onResetSearchWordHandler() {
     this.showResetBtn(false);
     this.$searchInput.value = '';
+    this.emit('resetSearchResult');
   }
 }
