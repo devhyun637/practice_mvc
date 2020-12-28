@@ -12,7 +12,9 @@ export default class MainController {
       .on('submitInput', (e) => this.onSubmitSearchInput(e.detail))
       .on('resetSearchResult', () => this.onResetSearchResult());
 
-    this.tabView = new TabView().setup(document.querySelector('#tabs'));
+    this.tabView = new TabView()
+      .setup(document.querySelector('#tabs'))
+      .on('changeTab', (e) => this.onChangeClickTab(e.detail));
 
     this.resultForm = new ResultView().setup(document.querySelector('#search-result'));
 
@@ -43,5 +45,9 @@ export default class MainController {
 
   onResetSearchResult() {
     this.resultForm.hide();
+  }
+
+  onChangeClickTab(tabName) {
+    console.log(`${tag} onChangeClickTab ${tabName}`);
   }
 }
