@@ -10,20 +10,17 @@ export default class ResultView extends View {
 
   render(resultData = []) {
     this.$element.innerHTML = resultData.length
-      ? this.getSearchResultHTML(resultData)
+      ? this.getSearchResultsHTML(resultData)
       : RESULT_VIEW_MESSAGES.NO_RESULT;
   }
 
-  getSearchResultHTML(resultData) {
-    return `${resultData.reduce(
-      (html, item) => (html += this.getSearchItemHTML(item)),
-      '<ul>'
-    )}</ul>`;
+  getSearchResultsHTML(resultData) {
+    return `<ul> ${resultData.map(this.getSearchItemHTML).join('')} </ul>`;
   }
 
   getSearchItemHTML(resultItem) {
-    return `<li>
-        <img src=${resultItem.image} alt=${resultItem.name} />
+    return `<li id=${resultItem.id}>
+        <img src=${resultItem.image} alt=${resultItem.name}>
         <span>${resultItem.name}</span>
       </li>`;
   }
