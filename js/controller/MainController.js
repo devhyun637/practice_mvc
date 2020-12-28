@@ -1,5 +1,7 @@
 import InputSearchFormView from '../views/InputSearchFormView.js';
 import ResultView from '../views/ResultView.js';
+import TabView from '../views/TabView.js';
+
 import SearchModel from '../models/SearchModel.js';
 
 const tag = `[MainController]`;
@@ -10,7 +12,18 @@ export default class MainController {
       .on('submitInput', (e) => this.onSubmitSearchInput(e.detail))
       .on('resetSearchResult', () => this.onResetSearchResult());
 
-    this.resultForm = new ResultView().setup(document.querySelector('.content'));
+    this.tabView = new TabView().setup(document.querySelector('#tabs'));
+
+    this.resultForm = new ResultView().setup(document.querySelector('#search-result'));
+
+    const tabName = '추천 검색어';
+    this.renderViews(tabName);
+  }
+
+  renderViews(tabName) {
+    console.log(`${tag} renderViews ${tabName}`);
+    this.resultForm.hide();
+    this.tabView.setActiveTab(tabName);
   }
 
   searchWords(resultWords) {
