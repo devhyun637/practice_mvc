@@ -7,7 +7,7 @@ export default class SearchView extends View {
     this.init($element);
     this.$searchInput = this.$element.querySelector('#search-input');
     this.$searchResetBtn = this.$element.querySelector('.btn-reset');
-    this.bindEvent();
+    this.bindEvents();
     this.showResetBtn(false);
     return this;
   }
@@ -16,15 +16,20 @@ export default class SearchView extends View {
     this.$searchResetBtn.style.display = show ? 'block' : 'none';
   }
 
-  bindEvent() {
-    this.$searchInput.addEventListener('keydown', (e) => this.onSubmitSearchWordHandler(e));
+  resetInputValue() {
+    this.$searchInput.value = '';
+    this.showResetBtn(this.$searchInput.value.length);
+  }
+
+  bindEvents() {
+    this.$searchInput.addEventListener('keydown', (e) => this.onSubmitInputWordHandler(e));
     this.$searchResetBtn.addEventListener('click', () => this.onResetSearchWordHandler());
   }
 
-  onSubmitSearchWordHandler(e) {
-    this.showResetBtn(true);
+  onSubmitInputWordHandler(e) {
+    this.showResetBtn(this.$searchInput.value.length);
     if (!this.$searchInput.value.length) {
-      this.onResetSearchWordHandler();
+      this.emit('resetSearchResult');
     }
     if (e.key !== KEYBOARD.ENTER) {
       return;
@@ -33,8 +38,7 @@ export default class SearchView extends View {
   }
 
   onResetSearchWordHandler() {
-    this.showResetBtn(false);
-    this.$searchInput.value = '';
+    this.resetInputValue();
     this.emit('resetSearchResult');
   }
 }
