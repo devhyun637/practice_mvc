@@ -12,6 +12,7 @@ export default class ResultView extends View {
     this.$element.innerHTML = resultData.length
       ? this.getSearchResultsHTML(resultData)
       : RESULT_VIEW_MESSAGES.NO_RESULT;
+    this.show();
   }
 
   getSearchResultsHTML(resultData) {

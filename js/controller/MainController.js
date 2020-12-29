@@ -2,11 +2,13 @@ import InputSearchFormView from '../views/InputSearchFormView.js';
 import ResultView from '../views/ResultView.js';
 import TabView from '../views/TabView.js';
 import KeywordView from '../views/KeywordView.js';
+import HistoryView from '../views/HistoryView.js';
 
 import SearchModel from '../models/SearchModel.js';
+import KeywordModel from '../models/KeywordModel.js';
+import HistoryModel from '../models/HistoryModel.js';
 
 import { TAB_NAME } from '../utils/constants.js';
-import KeywordModel from '../models/KeywordModel.js';
 
 const tag = `[MainController]`;
 export default class MainController {
@@ -24,9 +26,13 @@ export default class MainController {
       .setup(document.querySelector('#search-keyword'))
       .on('clickKeyword', (e) => this.onClickKeyword(e.detail));
 
+    this.historyView = new HistoryView()
+      .setup(document.querySelector('#search-history'))
+      .on('clickKeyword', (e) => this.onClickHistory(e.detail));
+
     this.resultForm = new ResultView().setup(document.querySelector('#search-result'));
 
-    this.tabName = TAB_NAME.KEYWORD;
+    this.tabName = TAB_NAME.HISTORY;
     this.renderViews(this.tabName);
   }
 
@@ -36,6 +42,8 @@ export default class MainController {
 
     if (tabName === TAB_NAME.KEYWORD) {
       this.fetchKeywords();
+    } else {
+      this.fetchHistory();
     }
 
     this.resultForm.hide();
@@ -44,6 +52,12 @@ export default class MainController {
   fetchKeywords() {
     KeywordModel.list().then((data) => {
       this.keywordView.renderKeywordHTML(data);
+    });
+  }
+
+  fetchHistory() {
+    HistoryModel.list().then((data) => {
+      this.historyView.renderKeywordHTML(data);
     });
   }
 
@@ -57,7 +71,7 @@ export default class MainController {
   renderSearchResult(data) {
     this.tabView.hide();
     this.keywordView.hide();
-    this.resultForm.show();
+    this.historyView.hide();
     this.resultForm.render(data);
   }
 
@@ -75,5 +89,9 @@ export default class MainController {
 
   onClickKeyword(keywordName) {
     this.searchWords(keywordName);
+  }
+
+  onClickHistory(historyName) {
+    this.searchWords(historyName);
   }
 }
