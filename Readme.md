@@ -1,5 +1,7 @@
 # Vanilla JS with MVC pattern
-- [인프런 실습 UI 개발로 배워보는 순수 javascript 와 VueJS 개발](https://www.inflearn.com/course/%EC%88%9C%EC%88%98js-vuejs-%EA%B0%9C%EB%B0%9C-%EA%B0%95%EC%A2%8C/dashboard) 강의를 듣고  Vanilla JS로 MVC 패턴을 연습한 코드 저장소입니다.
+- [인프런 실습 UI 개발로 배워보는 순수 javascript 와 VueJS 개발](https://www.inflearn.com/course/%EC%88%9C%EC%88%98js-vuejs-%EA%B0%9C%EB%B0%9C-%EA%B0%95%EC%A2%8C/dashboard) 강의를 듣고  Vanilla JS로 MVC 패턴을 연습한 프로젝트 입니다.
+- css와 html, Model은 강의를 그대로 활용하고,
+- View와 Controller는 class를 활용하여 프로젝트를 진행하였습니다.
 
 ## 기능 구현 목록
 1. 사용자는 검색 폼에 찾고자하는 단어를 검색할 수 있다.
@@ -28,3 +30,6 @@
     - [x] [조건] 목록에서 최근 검색어를 선택하면, 검색 폼에 선택된 추천 검색어가 나타난다.
     - [x] [조건] 목록에서 x 버튼을 클릭하면, 최근 검색어를 삭제할 수 있다.
     - [x] [조건] 검색시마다 최근 검색어 목록에 추가된다.
+
+## 프로젝트 화면
+<img src="https://user-images.githubusercontent.com/59258239/103296315-39e78e80-4a39-11eb-810e-369fba23d98f.gif" width="40%"></img>
