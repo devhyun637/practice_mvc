@@ -13,6 +13,7 @@ export default class KeywordView extends View {
       ? this.getKeywordsHTML(keywords)
       : RESULT_VIEW_MESSAGES.NO_KEYWORD;
     this.bindClickEvent();
+    this.show();
   }
 
   getKeywordsHTML(keywords) {

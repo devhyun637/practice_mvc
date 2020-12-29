@@ -11,7 +11,7 @@ import KeywordModel from '../models/KeywordModel.js';
 const tag = `[MainController]`;
 export default class MainController {
   init() {
-    new InputSearchFormView()
+    this.inputSearchFormview = new InputSearchFormView()
       .setup(document.querySelector('#search-input-container'))
       .on('submitInput', (e) => this.onSubmitSearchInput(e.detail))
       .on('resetSearchResult', () => this.onResetSearchResult());
@@ -26,17 +26,19 @@ export default class MainController {
 
     this.resultForm = new ResultView().setup(document.querySelector('#search-result'));
 
-    const tabName = TAB_NAME.KEYWORD;
-    this.renderViews(tabName);
+    this.tabName = TAB_NAME.KEYWORD;
+    this.renderViews(this.tabName);
   }
 
   renderViews(tabName) {
     console.log(`${tag} renderViews ${tabName}`);
-    this.resultForm.hide();
+    this.tabView.setActiveTab(tabName);
+
     if (tabName === TAB_NAME.KEYWORD) {
       this.fetchKeywords();
     }
-    this.tabView.setActiveTab(tabName);
+
+    this.resultForm.hide();
   }
 
   fetchKeywords() {
@@ -46,6 +48,7 @@ export default class MainController {
   }
 
   searchWords(resultWords) {
+    this.inputSearchFormview.setInputValue(resultWords);
     SearchModel.list(resultWords).then((data) => {
       this.renderSearchResult(data);
     });
@@ -63,7 +66,7 @@ export default class MainController {
   }
 
   onResetSearchResult() {
-    this.resultForm.hide();
+    this.renderViews(this.tabName);
   }
 
   onChangeClickTab(tabName) {

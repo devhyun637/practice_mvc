@@ -16,6 +16,11 @@ export default class InputSearchFormView extends View {
     this.$searchResetBtn.style.display = show ? 'block' : 'none';
   }
 
+  setInputValue(inputValue) {
+    this.$searchInput.value = inputValue;
+    this.showResetBtn(inputValue.length);
+  }
+
   resetInputValue() {
     this.$searchInput.value = '';
     this.showResetBtn(this.$searchInput.value.length);

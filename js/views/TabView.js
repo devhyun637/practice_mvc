@@ -12,6 +12,7 @@ export default class TabView extends View {
     Array.from(this.$element.children).forEach((tab) => {
       tab.className = tab.innerHTML === tabName ? 'active' : '';
     });
+    this.show();
   }
 
   bindClickTabEvent() {
