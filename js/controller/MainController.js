@@ -1,8 +1,12 @@
 import InputSearchFormView from '../views/InputSearchFormView.js';
 import ResultView from '../views/ResultView.js';
 import TabView from '../views/TabView.js';
+import KeywordView from '../views/KeywordView.js';
 
 import SearchModel from '../models/SearchModel.js';
+
+import { TAB_NAME } from '../utils/constants.js';
+import KeywordModel from '../models/KeywordModel.js';
 
 const tag = `[MainController]`;
 export default class MainController {
@@ -16,16 +20,27 @@ export default class MainController {
       .setup(document.querySelector('#tabs'))
       .on('changeTab', (e) => this.onChangeClickTab(e.detail));
 
+    this.keywordView = new KeywordView().setup(document.querySelector('#search-keyword'));
+
     this.resultForm = new ResultView().setup(document.querySelector('#search-result'));
 
-    const tabName = '추천 검색어';
+    const tabName = TAB_NAME.KEYWORD;
     this.renderViews(tabName);
   }
 
   renderViews(tabName) {
     console.log(`${tag} renderViews ${tabName}`);
     this.resultForm.hide();
+    if (tabName === TAB_NAME.KEYWORD) {
+      this.fetchKeywords();
+    }
     this.tabView.setActiveTab(tabName);
+  }
+
+  fetchKeywords() {
+    KeywordModel.list().then((data) => {
+      this.keywordView.renderKeywordHTML(data);
+    });
   }
 
   searchWords(resultWords) {
