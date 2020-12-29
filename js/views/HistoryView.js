@@ -13,4 +13,17 @@ export default class HistoryView extends KeywordView {
       )
       .join('')}</ul>`;
   }
+
+  bindRemoveHistoryEvent() {
+    Array.from(this.$element.querySelectorAll('.btn-remove')).forEach((history) =>
+      history.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.onRemoveHistoryHandler(e.target.closest('li').dataset.keyword);
+      })
+    );
+  }
+
+  onRemoveHistoryHandler(historyName) {
+    this.emit('clickRemoveHistory', historyName);
+  }
 }

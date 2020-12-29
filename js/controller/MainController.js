@@ -28,11 +28,12 @@ export default class MainController {
 
     this.historyView = new HistoryView()
       .setup(document.querySelector('#search-history'))
-      .on('clickKeyword', (e) => this.onClickHistory(e.detail));
+      .on('clickKeyword', (e) => this.onClickHistory(e.detail))
+      .on('clickRemoveHistory', (e) => this.onRemoveHistory(e.detail));
 
     this.resultForm = new ResultView().setup(document.querySelector('#search-result'));
 
-    this.tabName = TAB_NAME.HISTORY;
+    this.tabName = TAB_NAME.KEYWORD;
     this.renderViews(this.tabName);
   }
 
@@ -42,8 +43,10 @@ export default class MainController {
 
     if (tabName === TAB_NAME.KEYWORD) {
       this.fetchKeywords();
+      this.historyView.hide();
     } else {
       this.fetchHistory();
+      this.keywordView.hide();
     }
 
     this.resultForm.hide();
@@ -57,15 +60,21 @@ export default class MainController {
 
   fetchHistory() {
     HistoryModel.list().then((data) => {
-      this.historyView.renderKeywordHTML(data);
+      this.historyView.renderKeywordHTML(data).bindRemoveHistoryEvent();
     });
   }
 
   searchWords(resultWords) {
     this.inputSearchFormview.setInputValue(resultWords);
+    HistoryModel.add(resultWords);
     SearchModel.list(resultWords).then((data) => {
       this.renderSearchResult(data);
     });
+  }
+
+  removeHistory(historyName) {
+    HistoryModel.remove(historyName);
+    this.renderViews(this.tabName);
   }
 
   renderSearchResult(data) {
@@ -85,6 +94,8 @@ export default class MainController {
 
   onChangeClickTab(tabName) {
     console.log(`${tag} onChangeClickTab ${tabName}`);
+    this.tabName = tabName;
+    this.renderViews(this.tabName);
   }
 
   onClickKeyword(keywordName) {
@@ -93,5 +104,9 @@ export default class MainController {
 
   onClickHistory(historyName) {
     this.searchWords(historyName);
+  }
+
+  onRemoveHistory(historyName) {
+    this.removeHistory(historyName);
   }
 }
