@@ -12,6 +12,7 @@ export default class KeywordView extends View {
     this.$element.innerHTML = keywords.length
       ? this.getKeywordsHTML(keywords)
       : RESULT_VIEW_MESSAGES.NO_KEYWORD;
+    this.bindClickEvent();
   }
 
   getKeywordsHTML(keywords) {
@@ -24,5 +25,15 @@ export default class KeywordView extends View {
         </li>`
       )
       .join('')}</ul>`;
+  }
+
+  bindClickEvent() {
+    Array.from(this.$element.querySelectorAll('li')).forEach((keyword) => {
+      keyword.addEventListener('click', () => this.onClickKeywordHandler(keyword.dataset.keyword));
+    });
+  }
+
+  onClickKeywordHandler(keywordName) {
+    this.emit('clickKeyword', keywordName);
   }
 }

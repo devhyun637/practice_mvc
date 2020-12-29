@@ -20,7 +20,9 @@ export default class MainController {
       .setup(document.querySelector('#tabs'))
       .on('changeTab', (e) => this.onChangeClickTab(e.detail));
 
-    this.keywordView = new KeywordView().setup(document.querySelector('#search-keyword'));
+    this.keywordView = new KeywordView()
+      .setup(document.querySelector('#search-keyword'))
+      .on('clickKeyword', (e) => this.onClickKeyword(e.detail));
 
     this.resultForm = new ResultView().setup(document.querySelector('#search-result'));
 
@@ -50,6 +52,8 @@ export default class MainController {
   }
 
   renderSearchResult(data) {
+    this.tabView.hide();
+    this.keywordView.hide();
     this.resultForm.show();
     this.resultForm.render(data);
   }
@@ -64,5 +68,9 @@ export default class MainController {
 
   onChangeClickTab(tabName) {
     console.log(`${tag} onChangeClickTab ${tabName}`);
+  }
+
+  onClickKeyword(keywordName) {
+    this.searchWords(keywordName);
   }
 }
